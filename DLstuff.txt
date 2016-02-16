@@ -1,0 +1,28 @@
+activity_main 		== 	app_bar_main
+navigation_drawer 	== 	activity_main
+navigation_header 	== 	nav_header_main
+
+activity_main
+* CoordinatorLayout
+o context:				.MainActivity
+o AppBarLayout
+* Toolbar			@+id/toolbar
+* /CoordinatorLayout
+navigation_drawer
+* DrawerLayout
+o id:				@+id/drawer_layout
+o include: 			@layout/activity_main
+o NavigationView
+* id:			@+id/nav_view
+* headerLayout: 		@layout/navigation_header
+* menu:			@menu/activity_main_drawer
+* /DrawerLayout
+
+navigation_header
+* LinearLayout
+o ImageView
+* id:			@+id/profileImage
+o TextView
+* id:			@+id/nameAndSurname
+* /LinearLayout
+
