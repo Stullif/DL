@@ -1,6 +1,7 @@
 package com.example.freydis.drinklink;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,17 +33,13 @@ import java.util.Vector;
 
 
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-
-    private CallbackManager callbackManager;
     private ActionBarDrawerToggle toggle;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private TextView userName;
     private ImageView profilePicture;
-    private TextView profileUrl;
 
     // ViewPager: Layout manager that allows the user to flip through pages of data.
     //            Must be associated with an instance of a PagerAdapter.
@@ -66,24 +63,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this,   // host activity
                 drawer, // DrawerLayout object - layout that host activity is linked to
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close
-        ) /*{
-
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        }*/
-        ;
-
+        );
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -100,19 +86,53 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void OnNavigationDrawerItemSelected(int position) {
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        switch(position) {
+            default:
+            case 0:
+                fragment = new LSidePanelFragment();
+                //fragment = new ProfileFragment();
+                break;
+            case 1:
+                fragment = new MainPanelFragment();
+                //fragment = new MainFragment();
+                break;
+            case 2:
+                fragment = new RSidePanelFragment();
+                //fragment = new GroupsFragment();
+                break;
+            case 3:
+                fragment = new LSidePanelFragment();
+                //fragment = new SettingsFragment();
+                break;
+            case 4:
+                fragment = new MainPanelFragment();
+                //logout();
+                break;
+        }
+        fragmentManager.beginTransaction()
+                .replace(R.id.nav_view, fragment)
+                .commit();
+
+    }
+
     // inflate navigation header
-    
+    //
     public void setNavigationHeader() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        // inflate navigation header view
+        // inflate navigation header and add to navigation drawer
+        // (need to inflate this to find the userName and profilePicture views)
         View header = LayoutInflater.from(this).inflate(R.layout.navigation_header, null);
         navigationView.addHeaderView(header);
 
         userName = (TextView) header.findViewById(R.id.user_name);
         profilePicture = (ImageView) header.findViewById(R.id.profile_pic);
 
+        // stuff sent from login activity
         Bundle extras = getIntent().getExtras();
         String name = extras.get("name").toString();
         String surname = extras.get("surname").toString();
@@ -132,10 +152,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    /*@SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
+
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
@@ -153,7 +175,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
+    }*/
 
 
     /*private void initializeVPager() {
