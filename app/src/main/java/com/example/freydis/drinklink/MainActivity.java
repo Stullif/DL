@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             drawer.closeDrawers();
         }
     }
-    
+
     // inflate navigation header
     //
     public void setNavigationHeader() {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         new DownloadImage(profilePicture).execute(imageUrl);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
 
 
