@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 /**
  * Created by Freydis on 2/1/2016.
  */
-public class LSidePanelFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_side_panel, container, false);
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
         return view;
 
     }
@@ -23,7 +23,7 @@ public class LSidePanelFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.Drasl, R.layout.fragment_side_panel);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.Drasl, R.layout.fragment_friends);
         setListAdapter(adapter);
 
         getListView().setOnItemClickListener(this);

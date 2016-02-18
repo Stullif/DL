@@ -9,7 +9,8 @@
         <item
             android:id="@+id/nav_drinks"
             android:icon="@drawable/ic_drinks"
-            android:title="Drinks" />
+            android:title="Drinks"
+            android:checked="true" />
         <item
             android:id="@+id/nav_groups"
             android:icon="@drawable/ic_group"

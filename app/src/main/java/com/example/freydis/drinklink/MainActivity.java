@@ -1,8 +1,8 @@
 package com.example.freydis.drinklink;
 
+import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,27 +19,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-
-import java.util.List;
-import java.util.Vector;
-
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private TextView userName;
     private ImageView profilePicture;
+    private Toolbar toolbar;
 
     // ViewPager: Layout manager that allows the user to flip through pages of data.
     //            Must be associated with an instance of a PagerAdapter.
@@ -60,70 +51,79 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // find drawer view
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this,   // host activity
-                drawer, // DrawerLayout object - layout that host activity is linked to
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        );
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        drawerToggle = setupDrawerToggle();
 
+        // tie DrawerLayout events to ActionBarToggle
+        drawer.setDrawerListener(drawerToggle);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        setupDrawerContent(navigationView);
         setNavigationHeader();
 
+    }
 
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+    }
 
-
-        //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //this.initializeTabHost(savedInstanceState);
-        //this.initializeVPager();
-
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
 
     }
 
+    public void selectDrawerItem(MenuItem menuItem) {
+        Fragment fragment = null;
+        Class fragmentClass = null;
 
-    public void OnNavigationDrawerItemSelected(int position) {
-        Fragment fragment;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        switch(position) {
-            default:
-            case 0:
-                fragment = new LSidePanelFragment();
-                //fragment = new ProfileFragment();
+        switch(menuItem.getItemId()) {
+            case R.id.nav_profile:
+                fragmentClass = ProfileFragment.class;
                 break;
-            case 1:
-                fragment = new MainPanelFragment();
-                //fragment = new MainFragment();
+            case R.id.nav_drinks:
+                fragmentClass = DrinksFragment.class;
                 break;
-            case 2:
-                fragment = new RSidePanelFragment();
-                //fragment = new GroupsFragment();
+            case R.id.nav_groups:
+                fragmentClass = FriendsFragment.class;
                 break;
-            case 3:
-                fragment = new LSidePanelFragment();
-                //fragment = new SettingsFragment();
+            case R.id.nav_tools:
+                fragmentClass = SettingsFragment.class;
                 break;
-            case 4:
-                fragment = new MainPanelFragment();
-                //logout();
+            case R.id.nav_logout:
+                logout();
                 break;
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.nav_view, fragment)
-                .commit();
 
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (fragment != null && fragmentClass != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+            menuItem.setChecked(true);
+            setTitle(menuItem.getTitle());
+            drawer.closeDrawers();
+        }
     }
-
+    
     // inflate navigation header
     //
     public void setNavigationHeader() {
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-
         // inflate navigation header and add to navigation drawer
         // (need to inflate this to find the userName and profilePicture views)
         View header = LayoutInflater.from(this).inflate(R.layout.navigation_header, null);
@@ -152,39 +152,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*@SuppressWarnings("StatementWithEmptyBody")
+
+
+
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
+        // sync toggle state after onRestoreInstanceState has occurred
+        drawerToggle.syncState();
+    }
 
-        int id = item.getItemId();
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-        if (id == R.id.nav_profile) {
-
-        } else if (id == R.id.nav_drinks) {
-
-        } else if (id == R.id.nav_groups) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_logout) {
-            logout();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }*/
-
+        // pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
     /*private void initializeVPager() {
 
         // fragments = list of pages
         List<Fragment> fragments = new Vector<Fragment>();
-        fragments.add(new LSidePanelFragment());
-        fragments.add(new MainPanelFragment());
-        fragments.add(new RSidePanelFragment());
+        fragments.add(new ProfileFragment());
+        fragments.add(new DrinksFragment());
+        fragments.add(new FriendsFragment());
 
         // VPagerAdapter object used to populate pages inside of ViewPager
         vPagerAdapter = new VPagerAdapter(getSupportFragmentManager(), fragments);
@@ -219,15 +212,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // method changed to allow ActionBarToggle to handle the events
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);

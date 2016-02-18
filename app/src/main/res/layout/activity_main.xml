@@ -7,19 +7,8 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+    <include
+        layout="@layout/navigation_drawer" />
 
     <!--<TabHost
         android:id="@android:id/tabhost"
@@ -74,7 +63,7 @@
             android:id="@+id/side_panel"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            class="com.example.freydis.drinklink.LSidePanelFragment" />
+            class="com.example.freydis.drinklink.ProfileFragment>
 
         <fragment
             android:layout_width="match_parent"
@@ -82,7 +71,7 @@
             android:id="@+id/main_panel"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            class="com.example.freydis.drinklink.MainPanelFragment" />
+            class="com.example.freydis.drinklink.DrinksFragment>
 
         <fragment
             android:layout_width="wrap_content"
@@ -90,7 +79,7 @@
             android:id="@+id/rside_panel"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            class="com.example.freydis.drinklink.RSidePanelFragment" />
+            class="com.example.freydis.drinklink.FriendsFragment>
 
     </RelativeLayout>-->
 
