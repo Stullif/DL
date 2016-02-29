@@ -1,5 +1,7 @@
 package com.example.freydis.drinklink;
 
+import android.os.Handler;
+import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -19,8 +21,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,21 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView userName;
     private ImageView profilePicture;
     private Toolbar toolbar;
-
-    // ViewPager: Layout manager that allows the user to flip through pages of data.
-    //            Must be associated with an instance of a PagerAdapter.
-    private ViewPager vPager;
-
-    // VPagerAdapter: A subclass that implements FragmentPagerAdapter, where each page is represented as a Fragment.
-    //                -  FragmentPagerAdapter implements PagerAdapter, which is an adapter that populates pages
-    //                   inside of a ViewPager.
-    //                -  Determines how many pages exist and which fragment to display for each page of the adapter.
-    private VPagerAdapter vPagerAdapter;
-
-    // TabHost: Container for tabbed window view.
-    //          -    Set of tab labels (clickable)
-    //          -    FrameLayout object that displays the contents of the selected page
-    private TabHost tabHost;
+    private boolean doubleBackClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +55,10 @@ public class MainActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
         setNavigationHeader();
-
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navdrawer_open, R.string.navdrawer_close);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -112,17 +102,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (fragment != null && fragmentClass != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+            ft.replace(R.id.flContent, fragment);
+            ft.addToBackStack(null);
+            ft.commit();
 
             menuItem.setChecked(true);
             setTitle(menuItem.getTitle());
+
             drawer.closeDrawers();
         }
     }
 
     // inflate navigation header
-    //
     public void setNavigationHeader() {
         // inflate navigation header and add to navigation drawer
         // (need to inflate this to find the userName and profilePicture views)
@@ -142,17 +136,6 @@ public class MainActivity extends AppCompatActivity {
         new DownloadImage(profilePicture).execute(imageUrl);
     }
 
-    /*@Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
-
-
 
 
     @Override
@@ -171,7 +154,115 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /*private void initializeVPager() {
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    // method changed to allow ActionBarToggle to handle the events
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+
+        else {
+
+            if (doubleBackClick) {
+                super.onBackPressed();
+                finish();
+            }
+            this.doubleBackClick = true;
+            Toast.makeText(this, "Click back again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackClick = false;
+                }
+            }, 2000);
+        }
+
+        /*} else {
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+
+            String bla = ""+count;
+            Toast.makeText(MainActivity.this, bla, Toast.LENGTH_LONG).show();
+
+            if (count == 0) {
+
+                Toast.makeText(MainActivity.this, "finish", Toast.LENGTH_LONG).show();
+                super.onBackPressed();
+                this.finish();
+            } else {
+                getSupportFragmentManager().popBackStack();
+
+            }
+        }*/
+    }
+
+
+
+    // Facebook logout
+    public void logout(){
+        LoginManager.getInstance().logOut();
+        Intent login = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(login);
+        finish();
+    }
+
+
+    /*@Override
+    protected void onSaveInstanceState(Bundle) {
+
+    }
+
+    @Override
+    protected void onPause() {
+
+    }
+
+    @Override
+    protected void onStop() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+    }*/
+}
+
+    /*
+        // ViewPager: Layout manager that allows the user to flip through pages of data.
+    //            Must be associated with an instance of a PagerAdapter.
+    private ViewPager vPager;
+
+    // VPagerAdapter: A subclass that implements FragmentPagerAdapter, where each page is represented as a Fragment.
+    //                -  FragmentPagerAdapter implements PagerAdapter, which is an adapter that populates pages
+    //                   inside of a ViewPager.
+    //                -  Determines how many pages exist and which fragment to display for each page of the adapter.
+    private VPagerAdapter vPagerAdapter;
+
+    // TabHost: Container for tabbed window view.
+    //          -    Set of tab labels (clickable)
+    //          -    FrameLayout object that displays the contents of the selected page
+    private TabHost tabHost;
+
+    private void initializeVPager() {
 
         // fragments = list of pages
         List<Fragment> fragments = new Vector<Fragment>();
@@ -204,28 +295,3 @@ public class MainActivity extends AppCompatActivity {
         vPager.setCurrentItem(1);
         //onRestart();
     }*/
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    // method changed to allow ActionBarToggle to handle the events
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    // Facebook logout
-    public void logout(){
-        LoginManager.getInstance().logOut();
-        Intent login = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(login);
-        finish();
-    }
-}

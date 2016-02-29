@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -100,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onSuccess(LoginResult loginResult) {
             Profile profile = Profile.getCurrentProfile();
             nextActivity(profile);
+
         }
 
         @Override
@@ -112,9 +114,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
-
-
-
 
     @Override
     protected void onResume() {
@@ -155,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             main.putExtra("surname", profile.getLastName());
             main.putExtra("imageUrl", profile.getProfilePictureUri(200, 200).toString());
             startActivity(main);
+            finish();
         }
     }
 }
