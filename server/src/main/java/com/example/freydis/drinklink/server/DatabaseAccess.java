@@ -45,7 +45,7 @@ public class DatabaseAccess extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String id = request.getParameter("id");
+        String user_id = request.getParameter("user_id");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
 
@@ -76,9 +76,10 @@ public class DatabaseAccess extends HttpServlet {
 
             try {
                 // use prepared statement to avoid sql injections etc.. :3
-                String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
+                String statement = "if not exists (select * from users where user_id = "+user_id+") insert into users (user_id, firstname, lastname) values(?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(statement);
-                preparedStatement.setString(1, id);
+
+                preparedStatement.setString(1, user_id);
                 preparedStatement.setString(2, firstname);
                 preparedStatement.setString(3, lastname);
                 int success = 2;
