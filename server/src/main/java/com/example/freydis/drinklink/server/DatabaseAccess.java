@@ -16,7 +16,7 @@ import com.google.appengine.api.utils.SystemProperty;
 
 public class DatabaseAccess extends HttpServlet {
 
-    /*@Override
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/plain");
@@ -40,7 +40,7 @@ public class DatabaseAccess extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -76,7 +76,7 @@ public class DatabaseAccess extends HttpServlet {
 
             try {
                 // use prepared statement to avoid sql injections etc.. :3
-                String statement = "if not exists (select * from users where user_id = "+user_id+") insert into users (user_id, firstname, lastname) values(?, ?, ?)";
+                String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(statement);
 
                 preparedStatement.setString(1, user_id);
