@@ -1,12 +1,10 @@
 package com.example.freydis.drinklink.view;
 
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.support.v4.app.ListFragment;
-=======
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
->>>>>>> 6e7b128c2adebf39a95d6d6c1e44da24ddd4238e
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

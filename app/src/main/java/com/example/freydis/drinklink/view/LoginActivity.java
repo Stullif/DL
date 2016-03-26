@@ -148,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
         String user_email = bundle.getString("email");
         String user_bday = bundle.getString("birthday");
 
-        Intent main = new Intent(LoginActivity.this, MainActivity.class);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -162,13 +161,6 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
 
         new LoginAsyncTask().execute(user_id, first_name, last_name);
-
-        AccessToken token = AccessToken.getCurrentAccessToken();
-        if (token != null) {
-            startActivity(main);
-            finish();
-        }
-
     }
 
     @Override
