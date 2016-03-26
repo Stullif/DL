@@ -1,6 +1,7 @@
 package com.example.freydis.drinklink.view;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import com.example.freydis.drinklink.control.DrinksPagerAdapter;
 /**
  * Created by Freydis on 2/1/2016.
  */
-public class DrinksFragment extends ListFragment {
+public class DrinksFragment extends Fragment {
 
     ViewPager pager;
     DrinksPagerAdapter pagerAdapter;

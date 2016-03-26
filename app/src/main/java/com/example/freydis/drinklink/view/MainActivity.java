@@ -1,6 +1,9 @@
 package com.example.freydis.drinklink.view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
@@ -23,6 +26,9 @@ import android.widget.Toast;
 
 import com.example.freydis.drinklink.R;
 import com.example.freydis.drinklink.control.DownloadImage;
+import com.example.freydis.drinklink.control.LoginAsyncTask;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 
 
@@ -35,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView profilePicture;
     private Toolbar toolbar;
     private boolean doubleBackClick = false;
-    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_drawer);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setupDrawerContent(navigationView);
         setNavigationHeader();
         setFragment(DrinksFragment.class);
+
     }
 
     public void setFragment(Class fragmentClass) {
@@ -121,16 +128,30 @@ public class MainActivity extends AppCompatActivity {
         userName = (TextView) header.findViewById(R.id.user_name);
         profilePicture = (ImageView) header.findViewById(R.id.profile_pic);
 
-        // stuff sent from login activity
-        Bundle loginExtras = getIntent().getExtras();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        String user_id = loginExtras.get("user_id").toString();
-        String firstname = loginExtras.get("firstname").toString();
-        String lastname = loginExtras.get("lastname").toString();
-        String imageUrl = loginExtras.get("imageUrl").toString();
+        userName.setText(preferences.getString("first_name", "") + " " + preferences.getString("last_name", ""));
 
-        userName.setText("" + firstname + " " + lastname);
-        new DownloadImage(profilePicture).execute(imageUrl);
+        new DownloadImage(profilePicture).execute(preferences.getString("profile_pic", ""));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -147,13 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
         // pass configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     // method changed to allow ActionBarToggle to handle the events
@@ -190,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
     // Facebook logout
     public void logout(){
         LoginManager.getInstance().logOut();
-        Intent login = new Intent(MainActivity.this, LoginActivity.class);
+        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(login);
         finish();
     }
@@ -235,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeVPager() {
 
-        // fragments = list of pages
+        // fragments = fragment_profile of pages
         List<Fragment> fragments = new Vector<Fragment>();
         fragments.add(new ProfileFragment());
         fragments.add(new DrinksFragment());
