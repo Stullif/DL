@@ -40,6 +40,9 @@
         <activity
             android:name=".view.MainActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name=".view.Drinks.AssignActivity"
+            android:label="@string/app_name" />
 
 
     </application>

@@ -3,6 +3,9 @@
     <string name="app_name">DrinkLink</string>
     <string name="title_activity_login">Login</string>
 
+    <string name="beer">Beer</string>
+    <string name="shot">Shot</string>
+    <string name="cocktail">Cocktail</string>
 
     <string name="navdrawer_item_profile">Profile</string>
     <string name="navdrawer_item_drinks">Drinks</string>

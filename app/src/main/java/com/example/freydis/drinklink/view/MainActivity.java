@@ -1,13 +1,11 @@
 package com.example.freydis.drinklink.view;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +23,9 @@ import android.widget.Toast;
 
 import com.example.freydis.drinklink.R;
 import com.example.freydis.drinklink.control.DownloadImage;
-import com.example.freydis.drinklink.control.LoginAsyncTask;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+import com.example.freydis.drinklink.view.Drinks.DrinksFragment;
+import com.example.freydis.drinklink.view.Drinks.Drinks_Host;
+import com.example.freydis.drinklink.view.Drinks.Drinks_List;
 import com.facebook.login.LoginManager;
 
 
@@ -208,75 +205,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(login);
         finish();
     }
-
-
-    /*@Override
-    protected void onSaveInstanceState(Bundle) {
-
-    }
-
-    @Override
-    protected void onPause() {
-
-    }
-
-    @Override
-    protected void onStop() {
-
-    }
-
-    @Override
-    protected void onDestroy() {
-
-    }*/
 }
 
-    /*
-        // ViewPager: Layout manager that allows the user to flip through pages of data.
-    //            Must be associated with an instance of a PagerAdapter.
-    private ViewPager vPager;
-
-    // DrinksPagerAdapter: A subclass that implements FragmentPagerAdapter, where each page is represented as a Fragment.
-    //                -  FragmentPagerAdapter implements PagerAdapter, which is an adapter that populates pages
-    //                   inside of a ViewPager.
-    //                -  Determines how many pages exist and which fragment to display for each page of the adapter.
-    private DrinksPagerAdapter vPagerAdapter;
-
-    // TabHost: Container for tabbed window view.
-    //          -    Set of tab labels (clickable)
-    //          -    FrameLayout object that displays the contents of the selected page
-    private TabHost tabHost;
-
-    private void initializeVPager() {
-
-        // fragments = fragment_profile of pages
-        List<Fragment> fragments = new Vector<Fragment>();
-        fragments.add(new ProfileFragment());
-        fragments.add(new DrinksFragment());
-        fragments.add(new FriendsFragment());
-
-        // DrinksPagerAdapter object used to populate pages inside of ViewPager
-        vPagerAdapter = new DrinksPagerAdapter(getSupportFragmentManager(), fragments);
-
-        vPager = (ViewPager) findViewById(R.id.viewpager);
-        vPager.setAdapter(vPagerAdapter);
-        vPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        vPager.setCurrentItem(1);
-        //onRestart();
-    }*/

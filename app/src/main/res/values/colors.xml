@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="dark_violet">#512DA8</color>
+    <color name="moderate_violet">#673AB7</color>
+    <color name="light_violet">#BE40FF</color>
+    <color name="light_pink">#FF4081</color>
+    <color name="light_green">#81FF40</color>
+    <color name="light_cyan">#40FFBE</color>
+    <color name="light_grey">#d3d3d3</color>
+
 </resources>

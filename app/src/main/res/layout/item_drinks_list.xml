@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/frame"
+        android:id="@+id/rel1"
+        android:layout_alignParentStart="true"
+
+        android:layout_alignParentLeft="true"
+        android:padding="5dp">
+
+        <!-- the icon view -->
+        <ImageView
+            android:id="@+id/drinkIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:scaleType="fitXY"/>
+
+        <!-- the title view -->
+        <TextView
+            android:id="@+id/drinkTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/frame"
+        android:id="@+id/rel2"
+        android:layout_alignParentRight="true"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/minusButton"
+            android:background="@drawable/button_states"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:padding="7dp"/>
+
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/plusButton"
+            android:background="@drawable/button_states"
+            android:text="+"/>
+
+    </LinearLayout>
+</RelativeLayout>

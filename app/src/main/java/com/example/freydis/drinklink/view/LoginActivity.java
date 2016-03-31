@@ -148,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
         String user_email = bundle.getString("email");
         String user_bday = bundle.getString("birthday");
 
-
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
 
@@ -172,6 +171,8 @@ public class LoginActivity extends AppCompatActivity {
             Intent main = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(main);
             finish();
+        } else {
+            attemptLogin();
         }
     }
 

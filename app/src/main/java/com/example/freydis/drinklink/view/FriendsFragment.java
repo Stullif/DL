@@ -60,8 +60,7 @@ public class FriendsFragment extends Fragment {
     }
 
     public void handleFriendResponse(View view, GraphResponse response) {
-        try
-        {
+        try {
             JSONObject jsonObject = response.getJSONObject();
 
             //Log.d(LoginActivity.class.getSimpleName(), "" + jsonObject.get("data"));
@@ -72,13 +71,9 @@ public class FriendsFragment extends Fragment {
                 JSONObject friend = data.getJSONObject(i);
                 String name = friend.getString("name");
                 friends.add(name);
-                //Log.d(LoginActivity.class.getSimpleName(), name);
-                //Log.d(LoginActivity.class.getSimpleName(), ""+data);
             }
             populateFriends(view, friends);
-        }
-        catch ( Throwable t )
-        {
+        } catch (Throwable t) {
             t.printStackTrace();
         }
     }
