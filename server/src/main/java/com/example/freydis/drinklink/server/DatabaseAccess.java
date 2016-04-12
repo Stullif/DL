@@ -1,6 +1,7 @@
 package com.example.freydis.drinklink.server;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,10 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import javax.servlet.*;
 
 import com.google.appengine.api.utils.SystemProperty;
+
 
 
 public class DatabaseAccess extends HttpServlet {
@@ -20,26 +24,63 @@ public class DatabaseAccess extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/plain");
+        String db_url = null;
+        Connection connection;
+        //response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        try {
+            if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+                Class.forName("com.mysql.jdbc.GoogleDriver");
+                //jdbc:google:mysql://<project id>:<instance name>/<database name>
+                db_url = "jdbc:google:mysql://spheric-alcove-124715:drinklink01/drinklinkdb";
+            } else {
+                Class.forName("com.mysql.jdbc.Driver");
+                db_url = "jdbc:mysql://173.194.242.21:3306/drinklinkdb";
+            }
+        } catch (Exception e) {
+            response.getWriter().println("exception1: "+e.getMessage());
+            e.printStackTrace();
+            return;
+        }
 
         try {
             Class.forName("com.mysql.jdbc.GoogleDriver");
 
             //jdbc:google:mysql://<project id>:<instance name>
             String url = "jdbc:google:mysql://spheric-alcove-124715:drinklink01/drinklinkdb";
-
+            //response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             //open connection
-            Connection connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(db_url,"root","root");
+            //Connection connection = DriverManager.getConnection(url);
 
             //sql query
             Statement statement = connection.createStatement();
-            String sql = "SELECT user_id FROM Users";
+            //String sql = "SELECT user_id FROM Users";
+            String sql = "SELECT * FROM users";
             ResultSet resultSet = statement.executeQuery(sql);
 
+            //ServletOutputStream out = response.getOutputStream();
+            response.setContentType("text/plain");
+            String responseBody = "";
+            while(resultSet.next()) {
+                responseBody += resultSet.getString("firstname") + "\n";
+            }
+            responseBody+="something";
+            response.getWriter().println(responseBody);
+            response.getWriter().flush();
+            response.getWriter().close();
+
+            response.getWriter().println("something");
+
+
+
         } catch (SQLException e) {
+            response.getWriter().println("exception: "+e.getMessage());
             e.printStackTrace();
         } catch (Exception e) {
+            response.getWriter().println("exception: "+e.getMessage());
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -73,7 +114,6 @@ public class DatabaseAccess extends HttpServlet {
         try {
             //open connection
             connection = DriverManager.getConnection(db_url, "root", "root");
-
             try {
                 // use prepared statement to avoid sql injections etc.. :3
                 String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
@@ -93,7 +133,7 @@ public class DatabaseAccess extends HttpServlet {
                 connection.close();
             }
         } catch (SQLException e) {
-            response.getWriter().println("exception2: "+e.getMessage());
+            response.getWriter().println("doot doot exception2: "+e.getMessage());
             e.printStackTrace();
         }
     }
