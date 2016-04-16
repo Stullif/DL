@@ -19,7 +19,7 @@ public class Tab {
     }
 
     public void removeTransaction(Transaction t){
-
+        this.transactions.remove(t);
     }
 
     public Transaction getMostRecentTransaction(){

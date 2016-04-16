@@ -14,10 +14,28 @@ public class User {
     private String lastname;
     private ImageView profilePic;
     private ArrayList<Group> groups = new ArrayList<Group>();
+    public Tab personalTab;
+    public Tab sharedTab;
 
 
     public User() {
 
+    }
+
+    public Tab getPersonalTab(){
+        return this.personalTab;
+    }
+
+    public void setPersonalTab(Tab t){
+        this.personalTab = t;
+    }
+
+    public Tab getSharedTab(){
+        return this.sharedTab;
+    }
+
+    public void setSharedTab(Tab t){
+        this.sharedTab = t;
     }
 
     public void addGroup(Group group) {
