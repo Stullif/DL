@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import android.util.Log;
 
 /**
  * Created by Freydis on 3/16/2016.
@@ -51,11 +52,14 @@ public class LoginAsyncTask extends AsyncTask<String, Void, String> {
                 response.append('\r');
             }
             rd.close();
+            Log.d("post",response.toString());
             return response.toString();
 
         } catch (Exception e) {
             e.printStackTrace();
             return "catch: "+e.getMessage();
+        }finally{
+            //urlConnection.disconnect();
         }
     }
 

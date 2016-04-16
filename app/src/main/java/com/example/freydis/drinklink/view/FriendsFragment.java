@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.freydis.drinklink.R;
+import com.example.freydis.drinklink.control.GETAsyncTask;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -47,7 +48,7 @@ public class FriendsFragment extends Fragment {
         ).executeAsync();
 
         // adapter which populate the friends in listview
-
+        new GETAsyncTask().execute();
 
         return view;
 
@@ -63,7 +64,7 @@ public class FriendsFragment extends Fragment {
         try {
             JSONObject jsonObject = response.getJSONObject();
 
-            //Log.d(LoginActivity.class.getSimpleName(), "" + jsonObject.get("data"));
+            Log.d(LoginActivity.class.getSimpleName(), "" + jsonObject.get("data"));
             ArrayList<String> friends = new ArrayList<String>();
             JSONArray data = (JSONArray)jsonObject.get("data");
             int length = data.length();
