@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/continueButton"
             android:layout_gravity="bottom"
-            android:text="Continue"/>
+            android:text="@string/continue_button_text"/>
 
     </RelativeLayout>
 

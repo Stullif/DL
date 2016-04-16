@@ -43,7 +43,7 @@
             android:layout_height="45dp"
             android:id="@+id/minusButton"
             android:background="@drawable/button_states"
-            android:text="-"/>
+            android:text="@string/minus_button"/>
 
         <TextView
             android:id="@+id/textView"
@@ -57,7 +57,7 @@
             android:layout_height="45dp"
             android:id="@+id/plusButton"
             android:background="@drawable/button_states"
-            android:text="+"/>
+            android:text="@string/plus_button"/>
 
     </LinearLayout>
 </RelativeLayout>

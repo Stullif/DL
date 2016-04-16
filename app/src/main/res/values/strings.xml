@@ -16,4 +16,14 @@
     <string name="navdrawer_close">Close</string>
     <string name="title_activity_test">Test</string>
 
+    <string name="continue_button_text">Continue</string>
+    <string name="assign_drinks_button">Assign drinks --></string>
+    <string name="plus_button">+</string>
+    <string name="minus_button">-</string>
+
+    <string name="assign_drinks_frg1">Drinks to be assigned</string>
+    <string name="friends_frg1">Friends</string>
+    <string name="settings_frg1">Settings</string>
+
+
 </resources>

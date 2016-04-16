@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/assignButton"
             android:layout_gravity="bottom"
-            android:text="Assign drinks -->"/>
+            android:text="@string/assign_drinks_button"/>
 
     </RelativeLayout>
 
