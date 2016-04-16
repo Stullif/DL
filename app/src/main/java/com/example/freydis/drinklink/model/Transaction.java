@@ -63,7 +63,7 @@ public class Transaction {
         return this.timestamp;
     }
 
-    public void setTimestamp(String t){
+    public void setTimestamp(Date t){
         this.timestamp = t;
     }
 }
