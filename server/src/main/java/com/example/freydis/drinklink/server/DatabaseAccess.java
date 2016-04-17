@@ -79,7 +79,7 @@ public class DatabaseAccess extends HttpServlet {
             String sql = request.getParameterValues(paramNames[0])[0];
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
-                responseBody += resultSet.getString("firstname") + "\n";
+                responseBody += resultSet.getString("user_id") + " \n";
             }
 
 
@@ -104,9 +104,10 @@ public class DatabaseAccess extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String user_id = request.getParameter("user_id");
+        /*String user_id = request.getParameter("user_id");
         String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
+        String lastname = request.getParameter("lastname");*/
+        String sql = request.getParameter("query");
 
 
         response.setContentType("text/plain");
@@ -132,8 +133,9 @@ public class DatabaseAccess extends HttpServlet {
             //open connection
             connection = DriverManager.getConnection(db_url, "root", "root");
             try {
-                /*Statement stmt = connection.createStatement();
-                String sql;
+                Statement stmt = connection.createStatement();
+                stmt.executeUpdate(sql);
+                /* sql;
 
 
                 sql = "CREATE TABLE tabs (ownerID INT, tabID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(tabID))";
@@ -151,19 +153,7 @@ public class DatabaseAccess extends HttpServlet {
                 if(tableSuccess == 1) response.getWriter().println("made table transactions");*/
 
                 // use prepared statement to avoid sql injections etc.. :3
-                String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(statement);
 
-                preparedStatement.setString(1, user_id);
-                preparedStatement.setString(2, firstname);
-                preparedStatement.setString(3, lastname);
-                int success;
-                success = preparedStatement.executeUpdate();
-                if (success == 1) {
-                    response.getWriter().println("success");
-                } else if (success == 0) {
-                    response.getWriter().println("unsuccess");
-                }
             } finally {
                 connection.close();
             }
@@ -234,5 +224,64 @@ group
     CREATE TABLE transactions (userFrom INT, userTo INT, nota VARCHAR(255),
     transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID));
 
+     */
+    /*
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String user_id = request.getParameter("user_id");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String sql = request.getParameter("query");
+
+
+        response.setContentType("text/plain");
+        Connection connection = null;
+        String db_url = null;
+
+        try {
+            if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
+                Class.forName("com.mysql.jdbc.GoogleDriver");
+                //jdbc:google:mysql://<project id>:<instance name>/<database name>
+                db_url = "jdbc:google:mysql://spheric-alcove-124715:drinklink01/drinklinkdb";
+            } else {
+                Class.forName("com.mysql.jdbc.Driver");
+                db_url = "jdbc:mysql://173.194.242.21:3306/drinklinkdb";
+            }
+        } catch (Exception e) {
+            response.getWriter().println("exception1: "+e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            //open connection
+            connection = DriverManager.getConnection(db_url, "root", "root");
+            try {
+
+
+            // use prepared statement to avoid sql injections etc.. :3
+            String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(statement);
+
+            preparedStatement.setString(1, user_id);
+            preparedStatement.setString(2, firstname);
+            preparedStatement.setString(3, lastname);
+            int success = 2;
+            success = preparedStatement.executeUpdate();
+            if (success == 1) {
+                response.getWriter().println("success");
+            } else if (success == 0) {
+                response.getWriter().println("unsuccess");
+            }
+        } finally {
+                connection.close();
+                }
+                } catch (SQLException e) {
+                response.getWriter().println("doot doot exception2: "+e.getMessage());
+                e.printStackTrace();
+                }
+                }
      */
 }
