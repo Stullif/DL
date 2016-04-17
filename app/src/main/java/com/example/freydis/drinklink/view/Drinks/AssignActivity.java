@@ -15,10 +15,12 @@ import com.example.freydis.drinklink.R;
  * Created by Freydis on 3/26/2016.
  */
 public class AssignActivity extends AppCompatActivity {
-    private String beerCount;
-    private String shotCount;
-    private String cockCount;
+
+    private int beerCount;
+    private int shotCount;
+    private int cockCount;
     private int totalDrinks;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +28,17 @@ public class AssignActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+<<<<<<< HEAD
             beerCount = extras.getString("beerCount");
             shotCount = extras.getString("shotCount");
             cockCount = extras.getString("cockCount");
             totalDrinks = beerCount + shotCount + cockCount;
+=======
+            beerCount = extras.getInt("beerCount");
+            shotCount = extras.getInt("shotCount");
+            cockCount = extras.getInt("cockCount");
+            Log.d("extractIntent", beerCount + " " + shotCount + " " + cockCount);
+>>>>>>> dc2c4ec4e20c25451b86d639b4fb339a211453da
         }
 
         Button continueButton = (Button) findViewById(R.id.continueButton);
