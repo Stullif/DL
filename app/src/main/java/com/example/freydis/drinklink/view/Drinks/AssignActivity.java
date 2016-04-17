@@ -36,6 +36,7 @@ public class AssignActivity extends AppCompatActivity {
             Log.d("extractIntent", beerCount + " " + shotCount + " " + cockCount);
         }
 
+
         TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
         vi.setText(totalDrinks + "");
         Log.d("Stulli", vi.getText() + "");
@@ -57,5 +58,11 @@ public class AssignActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void reduceDrinksLeftCount() {
+        totalDrinks--;
+        TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
+        vi.setText(totalDrinks + "");
     }
 }
