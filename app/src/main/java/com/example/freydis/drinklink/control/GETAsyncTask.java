@@ -11,11 +11,18 @@ import java.net.URL;
 import java.net.URLEncoder;
 import android.util.Log;
 
+import com.example.freydis.drinklink.view.OnTaskCompleted;
+
 /**
  * Created by Freydis on 3/16/2016.
  */
 public class GETAsyncTask extends AsyncTask<String, Void, String> {
 
+    OnTaskCompleted listener;
+
+    public GETAsyncTask(OnTaskCompleted onTaskCompleted) {
+        this.listener = onTaskCompleted;
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -78,6 +85,6 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.d("get","Post executing " + result);
+        listener.onTaskCompleted(result);
     }
 }

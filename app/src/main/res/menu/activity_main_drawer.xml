@@ -15,6 +15,10 @@
             android:id="@+id/nav_groups"
             android:icon="@drawable/ic_group"
             android:title="@string/navdrawer_item_groups" />
+        <item
+            android:id="@+id/nav_tab"
+            android:icon="@drawable/ic_drinks"
+            android:title="Tab" />
     </group>
 
     <item android:title="App stuff">

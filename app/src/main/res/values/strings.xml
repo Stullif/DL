@@ -15,6 +15,7 @@
     <string name="navdrawer_open">Open</string>
     <string name="navdrawer_close">Close</string>
     <string name="title_activity_test">Test</string>
+    <string name="tab_title">Tab</string>
 
     <string name="continue_button_text">Continue</string>
     <string name="assign_drinks_button">Assign drinks --></string>

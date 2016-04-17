@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_groups:
                 setFragment(FriendsFragment.class);
                 break;
+            case R.id.nav_tab:
+                setFragment(TabFragment.class);
+                break;
             case R.id.nav_tools:
                 setFragment(SettingsFragment.class);
                 break;

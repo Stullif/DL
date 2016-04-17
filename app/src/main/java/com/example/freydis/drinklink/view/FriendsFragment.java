@@ -27,7 +27,7 @@ import java.util.ArrayList;
 /**
  * Created by Freydis on 2/10/2016.
  */
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends Fragment implements OnTaskCompleted {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class FriendsFragment extends Fragment {
         ).executeAsync();
 
         // adapter which populate the friends in listview
-        new GETAsyncTask().execute("SELECT * FROM users");
+        new GETAsyncTask(this).execute("SELECT * FROM users");
         //new POSTAsyncTask().execute("insert into users (user_id, firstname, lastname) values(10205511203474921, 'balli', 'halli')", "insert");
         //new POSTAsyncTask().execute("CREATE TABLE transactions (userFrom INT, userTo INT, note VARCHAR(255),\n" +
         //S        "    transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID))");
@@ -80,5 +80,9 @@ public class FriendsFragment extends Fragment {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+    }
+
+    public void onTaskCompleted(String result) {
+        Log.d("onTaskComplete", result);
     }
 }
