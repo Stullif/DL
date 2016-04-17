@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.freydis.drinklink.R;
 import com.example.freydis.drinklink.control.GETAsyncTask;
+import com.example.freydis.drinklink.control.POSTAsyncTask;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -49,6 +50,7 @@ public class FriendsFragment extends Fragment {
 
         // adapter which populate the friends in listview
         new GETAsyncTask().execute("SELECT * FROM users");
+        new POSTAsyncTask().execute("insert into users (user_id, firstname, lastname) values(10205511203474921, 'balli', 'halli')");
 
         return view;
 
