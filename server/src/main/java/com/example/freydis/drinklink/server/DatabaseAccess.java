@@ -26,7 +26,7 @@ public class DatabaseAccess extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("text/plain");
-        String db_url = null;
+        String db_url;
         Connection connection;
         ////response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         try {
@@ -103,8 +103,8 @@ public class DatabaseAccess extends HttpServlet {
 
 
         response.setContentType("text/plain");
-        Connection connection = null;
-        String db_url = null;
+        Connection connection;
+        String db_url;
 
         try {
             if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
@@ -132,7 +132,7 @@ public class DatabaseAccess extends HttpServlet {
                 preparedStatement.setString(1, user_id);
                 preparedStatement.setString(2, firstname);
                 preparedStatement.setString(3, lastname);
-                int success = 2;
+                int success;
                 success = preparedStatement.executeUpdate();
                 if (success == 1) {
                     response.getWriter().println("success");
