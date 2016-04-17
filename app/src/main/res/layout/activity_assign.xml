@@ -7,7 +7,7 @@
 
     <fragment
         android:layout_width="match_parent"
-        android:layout_height="wrap content"
+        android:layout_height="45dp"
         android:id="@+id/assignFrag1"
         class="com.example.freydis.drinklink.view.Drinks.AssignFragment1"
         tools:layout="@layout/activity_assign_frag1" />

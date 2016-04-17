@@ -28,17 +28,25 @@ public class AssignActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-<<<<<<< HEAD
-            beerCount = extras.getString("beerCount");
-            shotCount = extras.getString("shotCount");
-            cockCount = extras.getString("cockCount");
-            totalDrinks = beerCount + shotCount + cockCount;
-=======
+
             beerCount = extras.getInt("beerCount");
             shotCount = extras.getInt("shotCount");
             cockCount = extras.getInt("cockCount");
+            totalDrinks = beerCount + shotCount + cockCount;
             Log.d("extractIntent", beerCount + " " + shotCount + " " + cockCount);
->>>>>>> dc2c4ec4e20c25451b86d639b4fb339a211453da
+        }
+
+        TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
+        vi.setText(totalDrinks + "");
+        Log.d("Stulli", vi.getText() + "");
+
+        TextView nextDrinkTextValue = (TextView) findViewById(R.id.nextDrinkTextValue);
+        if(totalDrinks <= beerCount) {
+            nextDrinkTextValue.setText("Beer");
+        }else if((totalDrinks <= shotCount + beerCount)&&(totalDrinks > beerCount)){
+            nextDrinkTextValue.setText("Shot");
+        }else if(totalDrinks > (shotCount + beerCount)){
+            nextDrinkTextValue.setText("Cocktail");
         }
 
         Button continueButton = (Button) findViewById(R.id.continueButton);
@@ -46,8 +54,6 @@ public class AssignActivity extends AppCompatActivity {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView v = findViewById(R.id.assignFragDrinksLeftCount);
-                Log.d("Stulli", v.getText()+"");
                 Toast.makeText(v.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();
             }
         });
