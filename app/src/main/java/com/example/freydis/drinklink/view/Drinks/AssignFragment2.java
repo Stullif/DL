@@ -3,6 +3,7 @@ package com.example.freydis.drinklink.view.Drinks;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +51,17 @@ public class AssignFragment2 extends Fragment {
         return rootView;
     }
 
-    private void populateFriends(View view, final ArrayList<String> friends, ArrayList<String> friends_pic) {
+    private void populateFriends(final View view, final ArrayList<String> friends, ArrayList<String> friends_pic) {
         DataAdapter adapter = new DataAdapter(view.getContext(), friends, friends_pic);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                AssignActivity.totalDrinks = AssignActivity.totalDrinks-1;
+                Log.d("stulli", AssignActivity.totalDrinks+"");
+                TextView vi =(TextView) view.findViewById(R.id.assignFragDrinksLeftCount);
+                vi.setText(AssignActivity.totalDrinks + "");
                 Toast.makeText(v.getContext(), friends.get(position)+" " , Toast.LENGTH_SHORT).show();
                 // DO something
                 //Toast.makeText(v.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();

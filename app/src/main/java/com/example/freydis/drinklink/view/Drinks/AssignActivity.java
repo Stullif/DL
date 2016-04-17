@@ -19,7 +19,7 @@ public class AssignActivity extends AppCompatActivity {
     private int beerCount;
     private int shotCount;
     private int cockCount;
-    private int totalDrinks;
+    public static int totalDrinks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
