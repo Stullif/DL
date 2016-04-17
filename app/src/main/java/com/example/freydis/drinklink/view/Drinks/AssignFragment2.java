@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.freydis.drinklink.R;
@@ -52,6 +53,15 @@ public class AssignFragment2 extends Fragment {
     private void populateFriends(View view, ArrayList<String> friends, ArrayList<String> friends_pic) {
         DataAdapter adapter = new DataAdapter(view.getContext(), friends, friends_pic);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                //Toast.makeText(v.getContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+                // DO something
+
+            }
+        });
         //gridView.setOnItemClickListener(this);
     }
 
@@ -97,6 +107,7 @@ public class AssignFragment2 extends Fragment {
 
     /*@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(view.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();
         if (listener != null) {
             // notify interface that an item has been selected
             listener.onItemSelected(id);
