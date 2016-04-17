@@ -37,12 +37,16 @@ public class AssignActivity extends AppCompatActivity {
         }
 
 
-        TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
+        TextView vi = (TextView) findViewById(R.id.assignFragDrinksLeftCount);
         vi.setText(totalDrinks + "");
         Log.d("Stulli", vi.getText() + "");
 
         TextView nextDrinkTextValue = (TextView) findViewById(R.id.nextDrinkTextValue);
-        if(totalDrinks <= beerCount) {
+        if( totalDrinks == 0) {
+            Log.d("stulli", "supposed to disappear: "+totalDrinks);
+            findViewById(R.id.drinksLeftText).setVisibility(View.GONE);
+            nextDrinkTextValue.setText("All out of beer");
+        }else if(totalDrinks <= beerCount) {
             nextDrinkTextValue.setText("Beer");
         }else if((totalDrinks <= shotCount + beerCount)&&(totalDrinks > beerCount)){
             nextDrinkTextValue.setText("Shot");
@@ -60,9 +64,22 @@ public class AssignActivity extends AppCompatActivity {
         });
     }
 
-    public void reduceDrinksLeftCount() {
+    public void reduceDrinksLeftCount(int friendPosition) {
+        if(totalDrinks == 0) return;
         totalDrinks--;
         TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
         vi.setText(totalDrinks + "");
+        TextView nextDrinkTextValue = (TextView) findViewById(R.id.nextDrinkTextValue);
+        if( totalDrinks == 0) {
+            Log.d("stulli", "supposed to disappear: " + totalDrinks);
+            findViewById(R.id.drinksLeftText).setVisibility(View.GONE);
+            nextDrinkTextValue.setText("All out of beer");
+        }else if(totalDrinks <= beerCount) {
+            nextDrinkTextValue.setText("Beer");
+        }else if((totalDrinks <= shotCount + beerCount)&&(totalDrinks > beerCount)){
+            nextDrinkTextValue.setText("Shot");
+        }else if(totalDrinks > (shotCount + beerCount)){
+            nextDrinkTextValue.setText("Cocktail");
+        }
     }
 }
