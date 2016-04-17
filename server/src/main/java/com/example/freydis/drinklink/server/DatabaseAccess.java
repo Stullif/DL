@@ -57,15 +57,15 @@ public class DatabaseAccess extends HttpServlet {
             //sql query
             Statement statement = connection.createStatement();
             //String sql = "SELECT user_id FROM Users";
-            String sql = "SELECT * FROM users";
-            ResultSet resultSet = statement.executeQuery(sql);
+            //String sql = "SELECT * FROM users";
+            //ResultSet resultSet = statement.executeQuery(sql);
 
             //ServletOutputStream out = response.getOutputStream();
             response.setContentType("text/plain");
             String responseBody = "";
-            while(resultSet.next()) {
+            /*while(resultSet.next()) {
                 responseBody += resultSet.getString("firstname") + "\n";
-            }
+            }*/
             String[] paramNames = getParamNames(request);
             for(int i = 0; i < paramNames.length; i++ ) {
                 String[] paramValues = request.getParameterValues(paramNames[i]);
@@ -75,6 +75,13 @@ public class DatabaseAccess extends HttpServlet {
                 }
                 responseBody += "\n";
             }
+
+            String sql = request.getParameterValues(paramNames[0])[0];
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()) {
+                responseBody += resultSet.getString("firstname") + "\n";
+            }
+
 
             response.getWriter().println(responseBody);
             response.getWriter().flush();
@@ -144,7 +151,7 @@ public class DatabaseAccess extends HttpServlet {
                 if(tableSuccess == 1) response.getWriter().println("made table transactions");*/
 
                 // use prepared statement to avoid sql injections etc.. :3
-                /*String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
+                String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(statement);
 
                 preparedStatement.setString(1, user_id);
@@ -156,7 +163,7 @@ public class DatabaseAccess extends HttpServlet {
                     response.getWriter().println("success");
                 } else if (success == 0) {
                     response.getWriter().println("unsuccess");
-                }*/
+                }
             } finally {
                 connection.close();
             }
