@@ -31,7 +31,7 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
         URL url;
 
         try {
-            url = new URL(strurl);
+            url = new URL(strurl+"?user_id="+ URLEncoder.encode("5", "UTF-8") + "&firstname="+URLEncoder.encode("jonni", "UTF-8")+ "&firstname="+URLEncoder.encode("nonni", "UTF-8") + "&lastname="+URLEncoder.encode("jons", "UTF-8"));
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);

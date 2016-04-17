@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 
 import javax.servlet.ServletException;
@@ -26,7 +28,7 @@ public class DatabaseAccess extends HttpServlet {
         response.setContentType("text/plain");
         String db_url = null;
         Connection connection;
-        //response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        ////response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         try {
             if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {
                 Class.forName("com.mysql.jdbc.GoogleDriver");
@@ -64,10 +66,19 @@ public class DatabaseAccess extends HttpServlet {
             while(resultSet.next()) {
                 responseBody += resultSet.getString("firstname") + "\n";
             }
-            responseBody+="something";
+            String[] paramNames = getParamNames(request);
+            for(int i = 0; i < paramNames.length; i++ ) {
+                String[] paramValues = request.getParameterValues(paramNames[i]);
+                responseBody += paramNames[i] + " ";
+                for(int j = 0; j < paramValues.length; j++) {
+                    responseBody += paramValues[j] + " ";
+                }
+                responseBody += "\n";
+            }
+
             response.getWriter().println(responseBody);
             response.getWriter().flush();
-            response.getWriter().close();
+            //response.getWriter().close();
 
             response.getWriter().println("something");
 
@@ -90,7 +101,6 @@ public class DatabaseAccess extends HttpServlet {
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
 
-        System.out.println("doPost");
 
         response.setContentType("text/plain");
         Connection connection = null;
@@ -136,5 +146,21 @@ public class DatabaseAccess extends HttpServlet {
             response.getWriter().println("doot doot exception2: "+e.getMessage());
             e.printStackTrace();
         }
+    }
+
+
+    public String[] getParamNames(HttpServletRequest req) {
+        ArrayList<String> names = new ArrayList<String>();
+        Enumeration<String> parameterNames = req.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            names.add(parameterNames.nextElement());
+        }
+        String[] result = new String[names.size()];
+        result = names.toArray(result);
+        return result;
+    }
+    public String[] getParamValues(String param, HttpServletRequest req) {
+        String[] parameterValues = req.getParameterValues(param);
+        return (String[]) parameterValues;
     }
 }
