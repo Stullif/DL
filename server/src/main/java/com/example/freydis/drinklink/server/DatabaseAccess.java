@@ -225,6 +225,14 @@ group
     transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID));
 
      */
+
+    /*
+
+    CREATE TABLE users (user_id INT, firstname VARCHAR(255), lastname VARCHAR(255),
+    PRIMARY KEY(user_id));
+
+     */
+
     /*
 
     @Override
