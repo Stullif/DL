@@ -80,7 +80,7 @@ public class DatabaseAccess extends HttpServlet {
             response.getWriter().flush();
             //response.getWriter().close();
 
-            response.getWriter().println("something");
+            response.getWriter().println("something2");
 
 
 
@@ -125,8 +125,26 @@ public class DatabaseAccess extends HttpServlet {
             //open connection
             connection = DriverManager.getConnection(db_url, "root", "root");
             try {
+                /*Statement stmt = connection.createStatement();
+                String sql;
+
+
+                sql = "CREATE TABLE tabs (ownerID INT, tabID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(tabID))";
+                int tableSuccess = stmt.executeUpdate(sql);
+                if(tableSuccess == 1) response.getWriter().println("made table tabs");
+
+                sql = "CREATE TABLE drinks (drinkType VARCHAR(255), drinkName VARCHAR(255), price decimal(5,2)," +
+                        " drinkID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(drinkID))";
+                tableSuccess = stmt.executeUpdate(sql);
+                if(tableSuccess == 1) response.getWriter().println("made table drinks");
+
+                sql = "CREATE TABLE transactions (userFrom INT, userTo INT, nota VARCHAR(255)," +
+                        " transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID));";
+                tableSuccess = stmt.executeUpdate(sql);
+                if(tableSuccess == 1) response.getWriter().println("made table transactions");*/
+
                 // use prepared statement to avoid sql injections etc.. :3
-                String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
+                /*String statement = "insert into users (user_id, firstname, lastname) values(?, ?, ?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(statement);
 
                 preparedStatement.setString(1, user_id);
@@ -138,7 +156,7 @@ public class DatabaseAccess extends HttpServlet {
                     response.getWriter().println("success");
                 } else if (success == 0) {
                     response.getWriter().println("unsuccess");
-                }
+                }*/
             } finally {
                 connection.close();
             }
@@ -163,4 +181,51 @@ public class DatabaseAccess extends HttpServlet {
         String[] parameterValues = req.getParameterValues(param);
         return (String[]) parameterValues;
     }
+
+    /*
+
+    CREATE TABLE entries (guestName VARCHAR(255), content VARCHAR(255),
+    entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));
+
+     */
+
+    /*
+    users
+tabs
+drinks
+transaction
+group
+
+     */
+
+    /*
+
+    CREATE TABLE users (firstname VARCHAR(255), lastname VARCHAR(255),
+    user_id INT, PRIMARY KEY(user_id));
+
+     */
+
+    /*
+
+    CREATE TABLE tabs (ownerID INT,
+    tabID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(tabID));
+
+     */
+
+
+
+    /*
+
+    CREATE TABLE drinks (drinkType VARCHAR(255), drinkName VARCHAR(255), price decimal(5,2)
+    drinkID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(drinkID));
+
+     */
+
+
+    /*
+
+    CREATE TABLE transactions (userFrom INT, userTo INT, nota VARCHAR(255),
+    transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID));
+
+     */
 }
