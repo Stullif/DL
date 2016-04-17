@@ -20,6 +20,7 @@ public class POSTAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String query = params[0];
+        String insert = params[1];
         /*String user_id = params[0];
         String firstname = params[1];
         String lastname = params[2];*/
@@ -32,7 +33,7 @@ public class POSTAsyncTask extends AsyncTask<String, Void, String> {
             url = new URL(strurl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("POST");
-            String urlParameters = "query="+ URLEncoder.encode(query, "UTF-8");
+            String urlParameters = "query="+ URLEncoder.encode(query, "UTF-8") + "&insert="+URLEncoder.encode(insert, "UTF-8");
 
             urlConnection.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
 

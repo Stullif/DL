@@ -50,8 +50,9 @@ public class FriendsFragment extends Fragment {
 
         // adapter which populate the friends in listview
         new GETAsyncTask().execute("SELECT * FROM users");
-        new POSTAsyncTask().execute("insert into users (user_id, firstname, lastname) values(10205511203474921, 'balli', 'halli')");
-
+        //new POSTAsyncTask().execute("insert into users (user_id, firstname, lastname) values(10205511203474921, 'balli', 'halli')", "insert");
+        //new POSTAsyncTask().execute("CREATE TABLE transactions (userFrom INT, userTo INT, note VARCHAR(255),\n" +
+        //S        "    transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID))");
         return view;
 
     }

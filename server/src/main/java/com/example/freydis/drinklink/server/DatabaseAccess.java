@@ -108,6 +108,7 @@ public class DatabaseAccess extends HttpServlet {
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");*/
         String sql = request.getParameter("query");
+        Boolean insert = request.getParameter("insert").equals("insert");
 
 
         response.setContentType("text/plain");
@@ -134,7 +135,11 @@ public class DatabaseAccess extends HttpServlet {
             connection = DriverManager.getConnection(db_url, "root", "root");
             try {
                 Statement stmt = connection.createStatement();
-                stmt.executeUpdate(sql);
+                if(insert) {
+                    stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+                }else{
+                    stmt.executeUpdate(sql);
+                }
                 /* sql;
 
 
@@ -153,7 +158,12 @@ public class DatabaseAccess extends HttpServlet {
                 if(tableSuccess == 1) response.getWriter().println("made table transactions");*/
 
                 // use prepared statement to avoid sql injections etc.. :3
-
+                response.getWriter().println(sql);
+                if(insert) {
+                    ResultSet rs = stmt.getGeneratedKeys();
+                    rs.next();
+                    response.getWriter().println(rs.getInt(1));
+                }
             } finally {
                 connection.close();
             }
@@ -213,7 +223,7 @@ group
 
     /*
 
-    CREATE TABLE drinks (drinkType VARCHAR(255), drinkName VARCHAR(255), price decimal(5,2)
+    CREATE TABLE drinks (drinkType VARCHAR(255), drinkName VARCHAR(255), price decimal(5,2), transactionID INT,
     drinkID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(drinkID));
 
      */
@@ -221,7 +231,7 @@ group
 
     /*
 
-    CREATE TABLE transactions (userFrom INT, userTo INT, nota VARCHAR(255),
+    CREATE TABLE transactions (userFrom INT, userTo INT, note VARCHAR(255),
     transactionID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(transactionID));
 
      */
