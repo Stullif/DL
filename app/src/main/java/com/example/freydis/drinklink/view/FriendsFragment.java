@@ -48,7 +48,7 @@ public class FriendsFragment extends Fragment {
         ).executeAsync();
 
         // adapter which populate the friends in listview
-        new GETAsyncTask().execute();
+        new GETAsyncTask().execute("SELECT * FROM users");
 
         return view;
 
