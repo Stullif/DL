@@ -22,7 +22,8 @@
     <string name="plus_button">+</string>
     <string name="minus_button">-</string>
 
-    <string name="assign_drinks_frg1">Drinks to be assigned</string>
+    <string name="assign_drinks_frg1">   Drinks left to assign</string>
+    <string name="assign_drinks_frg1.1">Next drink is a </string>
     <string name="friends_frg1">Friends</string>
     <string name="settings_frg1">Settings</string>
 
