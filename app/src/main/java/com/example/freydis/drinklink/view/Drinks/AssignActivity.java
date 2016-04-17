@@ -13,11 +13,20 @@ import com.example.freydis.drinklink.R;
  * Created by Freydis on 3/26/2016.
  */
 public class AssignActivity extends AppCompatActivity {
-
+    private String beerCount;
+    private String shotCount;
+    private String cockCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            beerCount = extras.getString("beerCount");
+            shotCount = extras.getString("shotCount");
+            cockCount = extras.getString("cockCount");
+        }
 
         Button continueButton = (Button) findViewById(R.id.continueButton);
 

@@ -18,7 +18,6 @@ public class SettingsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         return view;
-
     }
 
 }
