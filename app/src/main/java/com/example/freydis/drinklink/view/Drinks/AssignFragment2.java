@@ -60,7 +60,7 @@ public class AssignFragment2 extends Fragment {
                                     int position, long id) {
                 AssignActivity.totalDrinks = AssignActivity.totalDrinks-1;
                 Log.d("stulli", AssignActivity.totalDrinks+"");
-                TextView vi =(TextView) view.findViewById(R.id.assignFragDrinksLeftCount);
+                TextView vi =(TextView) getView().findViewById(R.id.assignFragDrinksLeftCount);
                 vi.setText(AssignActivity.totalDrinks + "");
                 Toast.makeText(v.getContext(), friends.get(position)+" " , Toast.LENGTH_SHORT).show();
                 // DO something
