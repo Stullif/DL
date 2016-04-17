@@ -51,8 +51,18 @@ public class Drinks_ListAdapter extends ArrayAdapter<Drinks_ListItem> {
                 public void onClick(View v) {
                     if (viewHolder.count > 0) {
                         viewHolder.count--;
+
+                        viewHolder.textView.setText(""+viewHolder.count);
+                        if(viewHolder.drinkTitle.getText().equals("Beer")){
+                            DrinksFragment.setBeerCount(viewHolder.count);
+                        }
+                        if(viewHolder.drinkTitle.getText().equals("Shot")){
+                            DrinksFragment.setShotCount(viewHolder.count);
+                        }
+                        if(viewHolder.drinkTitle.getText().equals("Cocktail")){
+                            DrinksFragment.setCockCount(viewHolder.count);
+                        }
                     }
-                    viewHolder.textView.setText(""+viewHolder.count);
                 }
             });
 
@@ -61,6 +71,15 @@ public class Drinks_ListAdapter extends ArrayAdapter<Drinks_ListItem> {
                 public void onClick(View v) {
                     viewHolder.count += 1;
                     viewHolder.textView.setText(""+viewHolder.count);
+                    if(viewHolder.drinkTitle.getText().equals("Beer")){
+                        DrinksFragment.setBeerCount(viewHolder.count);
+                    }
+                    if(viewHolder.drinkTitle.getText().equals("Shot")){
+                        DrinksFragment.setShotCount(viewHolder.count);
+                    }
+                    if(viewHolder.drinkTitle.getText().equals("Cocktail")){
+                        DrinksFragment.setCockCount(viewHolder.count);
+                    }
                 }
             });
 
