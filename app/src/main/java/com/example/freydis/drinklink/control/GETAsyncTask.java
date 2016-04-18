@@ -85,6 +85,6 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        listener.onTaskCompleted(result);
+        listener.onGETTaskCompleted(result);
     }
 }

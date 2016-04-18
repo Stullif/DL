@@ -10,13 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.freydis.drinklink.R;
+import com.example.freydis.drinklink.view.OnTaskCompleted;
 
 import java.util.HashMap;
 
 /**
  * Created by Freydis on 3/26/2016.
  */
-public class AssignActivity extends AppCompatActivity {
+public class AssignActivity extends AppCompatActivity implements OnTaskCompleted {
 
     private int beerCount;
     private int shotCount;
@@ -96,9 +97,9 @@ public class AssignActivity extends AppCompatActivity {
             Toast.makeText(v.getContext(), "Nothing more to assign" , Toast.LENGTH_SHORT).show();
         }else if(totalDrinks <= beerCount) {
             if(beerAssignments.get(userId)== null) {
-                beerAssignments.put(userId,1);
+                beerAssignments.put(userId, 1);
             }else{
-                beerAssignments.put(userId,beerAssignments.get(userName)+1);
+                beerAssignments.put(userId, beerAssignments.get(userName) + 1);
             }
             nextDrinkTextValue.setText("Beer");
             totalDrinks--;
@@ -107,20 +108,27 @@ public class AssignActivity extends AppCompatActivity {
             if(shotAssignments.get(userId)== null) {
                 shotAssignments.put(userId, 1);
             }else{
-                shotAssignments.put(userId,shotAssignments.get(userName)+1);
+                shotAssignments.put(userId, shotAssignments.get(userName) + 1);
             }
             nextDrinkTextValue.setText("Shot");
             totalDrinks--;
             Toast.makeText(v.getContext(), "Assigned shot to "+userName , Toast.LENGTH_SHORT).show();
         }else if(totalDrinks > (shotCount + beerCount)){
             if(cockAssignments.get(userId)== null) {
-                cockAssignments.put(userId,1);
+                cockAssignments.put(userId, 1);
             }else{
-                cockAssignments.put(userId,cockAssignments.get(userName)+1);
+                cockAssignments.put(userId, cockAssignments.get(userName) + 1);
             }
             nextDrinkTextValue.setText("Cocktail");
             totalDrinks--;
             Toast.makeText(v.getContext(), "Assigned cocktail to "+userName , Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onGETTaskCompleted(String result) {
+
+    }
+    public void onPOSTTaskCompleted(String result) {
+
     }
 }
