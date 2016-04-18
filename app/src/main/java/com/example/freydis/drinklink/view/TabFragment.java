@@ -104,11 +104,13 @@ public class TabFragment extends Fragment implements OnTaskCompleted {
             index++;
             index %= vars.length;
         }
+        ArrayList<String> populator = new ArrayList<String>();
         ArrayList<String> friend_pic = new ArrayList<String>();
         for ( HashMap.Entry<String, Integer> entry : drinkCounts.entrySet()) {
             String key = entry.getKey();
             String[] userDrink = key.split("-");
             Integer value = entry.getValue();
+            populator.add("user:" + userDrink[0] + " drink:" + userDrink[1] + " count:" + value);
             Log.d("drinkCounts", "user:" + userDrink[0] + " drink:" + userDrink[1] + " count:" + value);
             try{
                 URL profile_pic = new URL("https://graph.facebook.com/"+userDrink[0]+"/picture?width=200&height=200");
@@ -117,13 +119,9 @@ public class TabFragment extends Fragment implements OnTaskCompleted {
                 t.printStackTrace();
             }
         }
-        /*
-            //var sett svona inn í grid viewið
-            DataAdapter adapter = new DataAdapter(view.getContext(), friends, friends_pic);
-            gridView.setAdapter(adapter);
-        */
 
         scanner.close();
+        populateTabList(populator.toArray(new String[populator.size()]));
         /*String[] lines = result.split(System.getProperty("line.separator"));
         for(int i = 0; i < lines.length; i++) {
             Log.d("onTaskComplete", lines[i]);
