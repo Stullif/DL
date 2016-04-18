@@ -68,7 +68,7 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
             while((line = rd.readLine()) != null) {
                 response.append(line + "\n");
                 Log.d("get", "added line");
-                response.append('\r');
+                //response.append('\r');
             }
             rd.close();
 
