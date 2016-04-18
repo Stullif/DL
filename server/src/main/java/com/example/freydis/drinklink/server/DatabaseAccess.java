@@ -67,19 +67,21 @@ public class DatabaseAccess extends HttpServlet {
                 responseBody += resultSet.getString("firstname") + "\n";
             }*/
             String[] paramNames = getParamNames(request);
-            for(int i = 0; i < paramNames.length; i++ ) {
+            /*for(int i = 0; i < paramNames.length; i++ ) {
                 String[] paramValues = request.getParameterValues(paramNames[i]);
                 responseBody += paramNames[i] + " ";
                 for(int j = 0; j < paramValues.length; j++) {
                     responseBody += paramValues[j] + " ";
                 }
                 responseBody += "\n";
-            }
+            }*/
 
             String sql = request.getParameterValues(paramNames[0])[0];
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
-                responseBody += resultSet.getString("user_id") + " \n";
+                for(int i = 1; i < paramNames.length; i++) {
+                    responseBody += resultSet.getString(paramNames[i]) + " \n";
+                }
             }
 
 
@@ -87,7 +89,7 @@ public class DatabaseAccess extends HttpServlet {
             response.getWriter().flush();
             //response.getWriter().close();
 
-            response.getWriter().println("something2");
+            //response.getWriter().println("something2");
 
 
 

@@ -38,8 +38,13 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
         URL url;
 
         try {
+            strurl += "?query="+ URLEncoder.encode(params[0], "UTF-8");
+            for(int i = 1; i < params.length; i++) {
+                strurl+= "&"+params[i]+"="+URLEncoder.encode(params[i],"UTF-8");
+            }
             //url = new URL(strurl+"?user_id="+ URLEncoder.encode("5", "UTF-8") + "&firstname="+URLEncoder.encode("jonni bonni", "UTF-8")+ "&firstname="+URLEncoder.encode("nonni", "UTF-8") + "&lastname="+URLEncoder.encode("jons", "UTF-8"));
-            url = new URL(strurl+"?query="+ URLEncoder.encode(params[0], "UTF-8"));
+            //url = new URL(strurl+"?query="+ URLEncoder.encode(params[0], "UTF-8"));
+            url = new URL(strurl);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
