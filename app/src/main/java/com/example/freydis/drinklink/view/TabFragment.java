@@ -18,6 +18,7 @@ import com.facebook.Profile;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -66,13 +67,27 @@ public class TabFragment extends Fragment implements OnTaskCompleted {
         return view;
 
     }
-    public void populateTabList(String[] transactions) {
-        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, transactions);
+    public void populateTabList(String[] transactions, String[] friend_pic) {
+        //ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, transactions);
         ListView listView = (ListView) getActivity().findViewById(R.id.tabList);
+        //listView.setAdapter(adapter);
+
+        DataAdapter adapter = new DataAdapter(view.getContext(), new ArrayList<String>(Arrays.asList(transactions)), new ArrayList<String>(Arrays.asList(friend_pic)));
         listView.setAdapter(adapter);
+
+
+        /*CustomList adapter = new
+                CustomList(MainActivity.this, transactions, friend_pic);
+        list=(ListView)findViewById(R.id.tabList);
+                list.setAdapter(adapter);*/
+
     }
     public void onGETTaskCompleted(String result) {
         Log.d("tabReturnGet","now in get complete");
+        if(result.trim().equals("")) {
+            populateTabList(new String[] {"No results"}, new String[]{""});
+            return;
+        }
         //Log.d("splitResult", "before split: "+ result);
         String[] vars = new String[] {"drink","drink","userFrom","userTo"};
         int index = 1;
@@ -110,8 +125,12 @@ public class TabFragment extends Fragment implements OnTaskCompleted {
             String key = entry.getKey();
             String[] userDrink = key.split("-");
             Integer value = entry.getValue();
-            populator.add("user:" + userDrink[0] + " drink:" + userDrink[1] + " count:" + value);
-            Log.d("drinkCounts", "user:" + userDrink[0] + " drink:" + userDrink[1] + " count:" + value);
+            populator.add(userDrink[1] + "s : " + value);
+            if(from) {
+                Log.d("drinkCounts", "user:" + userDrink[0] + " drink:" + userDrink[1] + " count:" + value);
+            }else{
+                Log.d("drinkCounts", "user2:" + userDrink[0] + " drink:" + userDrink[1] + " count:" + value);
+            }
             try{
                 URL profile_pic = new URL("https://graph.facebook.com/"+userDrink[0]+"/picture?width=200&height=200");
                 friend_pic.add(profile_pic.toString());
@@ -121,7 +140,7 @@ public class TabFragment extends Fragment implements OnTaskCompleted {
         }
 
         scanner.close();
-        populateTabList(populator.toArray(new String[populator.size()]));
+        populateTabList(populator.toArray(new String[populator.size()]),friend_pic.toArray(new String[friend_pic.size()]));
         /*String[] lines = result.split(System.getProperty("line.separator"));
         for(int i = 0; i < lines.length; i++) {
             Log.d("onTaskComplete", lines[i]);
