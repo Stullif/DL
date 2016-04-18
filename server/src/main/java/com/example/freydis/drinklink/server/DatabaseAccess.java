@@ -79,13 +79,22 @@ public class DatabaseAccess extends HttpServlet {
             String sql = request.getParameterValues(paramNames[0])[0];
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
-                for(int i = 1; i < paramNames.length; i++) {
-                    responseBody += resultSet.getString(paramNames[i]) + " \n";
+                /*for(int i = 1; i < paramNames.length; i++) {
+                    responseBody += resultSet.getString("drinkName") + " \n";
+                }*/
+                for (int i = 1; i<5; ++i) {
+                    response.getWriter().println(resultSet.getString(i)); // Or even rs.getObject()
                 }
+
             }
+            //ArrayList<Object> results = new ArrayList<Object>();
+
+            /*for(int i = 0; i < paramNames.length; i++) {
+                responseBody += paramNames[i];
+            }*/
 
 
-            response.getWriter().println(responseBody);
+            //response.getWriter().println(responseBody+request.getParameterValues(paramNames[0])[0]);
             response.getWriter().flush();
             //response.getWriter().close();
 
@@ -160,7 +169,7 @@ public class DatabaseAccess extends HttpServlet {
                 if(tableSuccess == 1) response.getWriter().println("made table transactions");*/
 
                 // use prepared statement to avoid sql injections etc.. :3
-                response.getWriter().println(sql);
+                //response.getWriter().println(sql);
                 if(insert) {
                     ResultSet rs = stmt.getGeneratedKeys();
                     rs.next();

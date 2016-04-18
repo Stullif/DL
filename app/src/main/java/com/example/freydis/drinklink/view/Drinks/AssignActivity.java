@@ -74,7 +74,7 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
                 Long currentUserId = Long.parseLong(profile.getId());
                 Log.d("usertransaction","currentUserId: "+currentUserId);
                 Toast.makeText(v.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();
-
+                /*Log.d("insertionValues", "about to get users");
                 HashSet<Long> userIds = new HashSet<Long>();
                 for ( HashMap.Entry<Long, Integer> entry : beerAssignments.entrySet()) {
                     userIds.add(entry.getKey());
@@ -85,20 +85,29 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
                 for ( HashMap.Entry<Long, Integer> entry : cockAssignments.entrySet()) {
                     userIds.add(entry.getKey());
                 }
+                Log.d("insertionValues", "about to make transactions");
                 for( Long userId : userIds) {
                     userIdTransactions.add(userId);
-                    //new POSTAsyncTask(AssignActivity.this).execute("insert into transactions (userFrom, userTo, note) values("+currentUserId+", "+userId+", 'tester')", "insert");
-                }
+                    String sql = "insert into transactions (userFrom, userTo, note) values(" + currentUserId + ", " + userId + ", 'tester')";
+                    Log.d("transactionPost", sql);
+                    new POSTAsyncTask(AssignActivity.this).execute(sql, "insert");
+                    Log.d("insertionValues", "made Transaction");
+                }*/
+                /*Log.d("insertionValues", "done making transactions, length: "+tranIdTransactions.size());
+
                 HashMap<Long,Integer> userTransactions = new HashMap<Long, Integer>();
-                for(int i = 0; i < userIdTransactions.size(); i++) {
+                for(int i = 0; i < tranIdTransactions.size(); i++) {
                     userTransactions.put(userIdTransactions.get(i),tranIdTransactions.get(i));
-                }
+                    Log.d("insertionValues", "id: "+ userIdTransactions.get(i)+ "tranId: "+ tranIdTransactions.get(i));
+                }*/
                 for ( HashMap.Entry<Long, Integer> entry : beerAssignments.entrySet()) {
                     Long key = entry.getKey();
                     Integer value = entry.getValue();
                     Log.d("usertransaction", "Beers: userId: " + key + " amount: " + value);
                     for(int i = 0; i < value; i++) {
-                        //new POSTAsyncTask(AssignActivity.this).execute("insert into drinks (drinkType, drinkName, price, transactionID ) values ('beer','beer',5,"+userTransactions.get(key) +")","insert");
+                        String sql = "insert into drinks (drinkType, drinkName, userFrom, userTo ) values ('beer','beer','"+currentUserId+"','"+key+"')";
+                        Log.d("drinkPost",sql);
+                        new POSTAsyncTask(AssignActivity.this).execute(sql,"insert");//+userTransactions.get(key) +")","insert");
                     }
                 }
                 for ( HashMap.Entry<Long, Integer> entry : shotAssignments.entrySet()) {
@@ -106,7 +115,9 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
                     Integer value = entry.getValue();
                     Log.d("usertransaction", "Shots: userId: " + key + " amount: " + value);
                     for(int i = 0; i < value; i++) {
-                        //new POSTAsyncTask(AssignActivity.this).execute("insert into drinks (drinkType, drinkName, price, transactionID ) values ('shot','shot',5,"+userTransactions.get(key) +")","insert");
+                        String sql = "insert into drinks (drinkType, drinkName, userFrom, userTo ) values ('shot','shot','"+currentUserId+"','"+key+"')";
+                        Log.d("drinkPost",sql);
+                        new POSTAsyncTask(AssignActivity.this).execute(sql,"insert");//userTransactions.get(key) +")","insert");
                     }
                 }
                 for ( HashMap.Entry<Long, Integer> entry : cockAssignments.entrySet()) {
@@ -114,9 +125,12 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
                     Integer value = entry.getValue();
                     Log.d("usertransaction","Cocks: userId: " + key + " amount: " + value);
                     for(int i = 0; i < value; i++) {
-                        //new POSTAsyncTask(AssignActivity.this).execute("insert into drinks (drinkType, drinkName, price, transactionID ) values ('cocktail','cocktail',5,"+userTransactions.get(key) +")","insert");
+                        String sql = "insert into drinks (drinkType, drinkName, userFrom, userTo ) values ('cocktail','cocktail','"+currentUserId+"','"+key+"')";
+                        Log.d("drinkPost",sql);
+                        new POSTAsyncTask(AssignActivity.this).execute(sql,"insert");//+userTransactions.get(key) +")","insert");
                     }
                 }
+                Log.d("done","done making insertions");
             }
         });
     }//((AssignActivity) getActivity()).reduceDrinksLeftCount(v,user_ids.get(position), friends.get(position));
@@ -125,7 +139,7 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
 
 
         TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
-        vi.setText(totalDrinks + "");
+
         TextView nextDrinkTextValue = (TextView) findViewById(R.id.nextDrinkTextValue);
         if( totalDrinks == 0) {
             findViewById(R.id.drinksLeftText).setVisibility(View.GONE);
@@ -159,13 +173,15 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
             totalDrinks--;
             Toast.makeText(v.getContext(), "Assigned cocktail to "+userName , Toast.LENGTH_SHORT).show();
         }
+        vi.setText(totalDrinks + "");
     }
 
     public void onGETTaskCompleted(String result) {
-        Log.d("onTaskComplete", "post: " + result);
+        Log.d("onTaskComplete", "get: " + result);
     }
     public void onPOSTTaskCompleted(String result) {
-        Log.d("onTaskComplete", "post: " + result);
-        tranIdTransactions.add(Integer.parseInt(result));
+        Log.d("onTaskComplete", "postdrink: " + result);
+        //tranIdTransactions.add(Integer.parseInt(result));
+        //Log.d("onTaskComplete", "transactionsize: "+tranIdTransactions.size());
     }
 }

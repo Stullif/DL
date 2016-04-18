@@ -38,10 +38,12 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
         URL url;
 
         try {
+
             strurl += "?query="+ URLEncoder.encode(params[0], "UTF-8");
-            for(int i = 1; i < params.length; i++) {
+            /*for(int i = 1; i < params.length; i++) {
                 strurl+= "&"+params[i]+"="+URLEncoder.encode(params[i],"UTF-8");
-            }
+                Log.d("params",params[i]);
+            }*/
             //url = new URL(strurl+"?user_id="+ URLEncoder.encode("5", "UTF-8") + "&firstname="+URLEncoder.encode("jonni bonni", "UTF-8")+ "&firstname="+URLEncoder.encode("nonni", "UTF-8") + "&lastname="+URLEncoder.encode("jons", "UTF-8"));
             //url = new URL(strurl+"?query="+ URLEncoder.encode(params[0], "UTF-8"));
             url = new URL(strurl);
@@ -64,7 +66,7 @@ public class GETAsyncTask extends AsyncTask<String, Void, String> {
             StringBuffer response = new StringBuffer();
             Log.d("get", "Before reading output"+rd.readLine());
             while((line = rd.readLine()) != null) {
-                response.append(line);
+                response.append(line + "\n");
                 Log.d("get", "added line");
                 response.append('\r');
             }

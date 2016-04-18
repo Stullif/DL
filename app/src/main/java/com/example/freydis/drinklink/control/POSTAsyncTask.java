@@ -59,7 +59,7 @@ public class POSTAsyncTask extends AsyncTask<String, Void, String> {
                 response.append('\r');
             }
             rd.close();
-            Log.d("post",response.toString());
+            //Log.d("post",response.toString());
             return response.toString();
 
         } catch (Exception e) {
