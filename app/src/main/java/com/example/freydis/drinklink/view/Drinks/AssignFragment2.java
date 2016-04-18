@@ -33,6 +33,9 @@ import java.util.ArrayList;
 public class AssignFragment2 extends Fragment {
 
     GridView gridView;
+    private ArrayList<String> friends = new ArrayList<String>();
+    private ArrayList<String> friends_pic = new ArrayList<String>();
+    private ArrayList<String> user_ids = new ArrayList<String>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,8 +65,8 @@ public class AssignFragment2 extends Fragment {
                 Log.d("stulli", AssignActivity.totalDrinks + "");
                 TextView vi =(TextView) getView().findViewById(R.id.assignFragDrinksLeftCount);
                 vi.setText(""+AssignActivity.totalDrinks);*/
-                Toast.makeText(v.getContext(), friends.get(position)+" " , Toast.LENGTH_SHORT).show();
-                ((AssignActivity) getActivity()).reduceDrinksLeftCount(position);
+                //Toast.makeText(v.getContext(), friends.get(position)+" " , Toast.LENGTH_SHORT).show();
+                ((AssignActivity) getActivity()).reduceDrinksLeftCount(v,Long.parseLong(user_ids.get(position)), friends.get(position));
                 // DO something
                 //Toast.makeText(v.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();
 
@@ -76,8 +79,7 @@ public class AssignFragment2 extends Fragment {
         try {
             JSONObject jsonObject = response.getJSONObject();
 
-            ArrayList<String> friends = new ArrayList<String>();
-            ArrayList<String> friends_pic = new ArrayList<String>();
+
             JSONArray data = (JSONArray)jsonObject.get("data");
             int length = data.length();
 
@@ -89,6 +91,7 @@ public class AssignFragment2 extends Fragment {
 
                 friends.add(name);
                 friends_pic.add(profile_pic.toString());
+                user_ids.add(id);
             }
             populateFriends(view, friends, friends_pic);
         } catch ( Throwable t ) {

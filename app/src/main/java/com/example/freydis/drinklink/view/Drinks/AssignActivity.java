@@ -62,24 +62,29 @@ public class AssignActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "send notifications ... ", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }//((AssignActivity) getActivity()).reduceDrinksLeftCount(v,user_ids.get(position), friends.get(position));
 
-    public void reduceDrinksLeftCount(int friendPosition) {
-        if(totalDrinks == 0) return;
-        totalDrinks--;
+    public void reduceDrinksLeftCount(View v, Long userId, String userName) {
+
         TextView vi =(TextView) findViewById(R.id.assignFragDrinksLeftCount);
         vi.setText(totalDrinks + "");
         TextView nextDrinkTextValue = (TextView) findViewById(R.id.nextDrinkTextValue);
         if( totalDrinks == 0) {
-            Log.d("stulli", "supposed to disappear: " + totalDrinks);
             findViewById(R.id.drinksLeftText).setVisibility(View.GONE);
             nextDrinkTextValue.setText("All out of beer");
+            Toast.makeText(v.getContext(), "Nothing more to assign" , Toast.LENGTH_SHORT).show();
         }else if(totalDrinks <= beerCount) {
             nextDrinkTextValue.setText("Beer");
+            totalDrinks--;
+            Toast.makeText(v.getContext(), "Assigned beer to "+userName , Toast.LENGTH_SHORT).show();
         }else if((totalDrinks <= shotCount + beerCount)&&(totalDrinks > beerCount)){
             nextDrinkTextValue.setText("Shot");
+            totalDrinks--;
+            Toast.makeText(v.getContext(), "Assigned shot to "+userName , Toast.LENGTH_SHORT).show();
         }else if(totalDrinks > (shotCount + beerCount)){
             nextDrinkTextValue.setText("Cocktail");
+            totalDrinks--;
+            Toast.makeText(v.getContext(), "Assigned cocktail to "+userName , Toast.LENGTH_SHORT).show();
         }
     }
 }

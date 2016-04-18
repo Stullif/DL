@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class ProfileFragment extends ListFragment {
                 "drinks given",
                 "drinks received"
         };
+        profileInfo[1] = profileInfo[1].equals("") ? "Email not available" : profileInfo[1];
+        profileInfo[2] = profileInfo[2].equals("") ? "Birthday not registered" : profileInfo[2];
 
         ListAdapter listAdapter = new ArrayAdapter<String>(
                 getActivity(),
