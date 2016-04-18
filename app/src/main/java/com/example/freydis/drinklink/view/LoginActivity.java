@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("user_bday", user_bday);
         editor.commit();
 
-        new LoginAsyncTask().execute(user_id, first_name, last_name);
+        //new LoginAsyncTask().execute(user_id, first_name, last_name);
     }
 
     @Override

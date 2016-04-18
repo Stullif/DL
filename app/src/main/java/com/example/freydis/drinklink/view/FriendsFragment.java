@@ -67,7 +67,7 @@ public class FriendsFragment extends Fragment implements OnTaskCompleted {
 
         // adapter which populate the friends in listview
         //new GETAsyncTask(this).execute("SELECT * FROM users", "user_id", "firstname");
-        new POSTAsyncTask(this).execute("insert into drinks(drinkID,drinkType,drinkName,userFrom,userTo) values(5,'beer','beer','5','6')","insert");
+        //new POSTAsyncTask(this).execute("insert into drinks(drinkID,drinkType,drinkName,userFrom,userTo) values(5,'beer','beer','5','6')","insert");
         //new POSTAsyncTask(this).execute("DROP TABLE IF EXISTS drinks","");
         //new POSTAsyncTask(this).execute("CREATE TABLE drinks (drinkType VARCHAR(255), drinkName VARCHAR(255), userFrom VARCHAR(255), userTo VARCHAR(255), drinkID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(drinkID))","");
         //new POSTAsyncTask(this).execute("insert into transactions (userFrom, userTo, note) values(1234, 123, 'tester')", "insert");

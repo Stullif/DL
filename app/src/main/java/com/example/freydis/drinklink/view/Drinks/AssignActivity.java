@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.example.freydis.drinklink.R;
 import com.example.freydis.drinklink.control.POSTAsyncTask;
 import com.example.freydis.drinklink.view.OnTaskCompleted;
+import com.example.freydis.drinklink.view.MainActivity;
 import com.facebook.Profile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
 
 /**
  * Created by Freydis on 3/26/2016.
@@ -131,6 +133,8 @@ public class AssignActivity extends AppCompatActivity implements OnTaskCompleted
                     }
                 }
                 Log.d("done","done making insertions");
+                Intent intent = new Intent(AssignActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }//((AssignActivity) getActivity()).reduceDrinksLeftCount(v,user_ids.get(position), friends.get(position));
